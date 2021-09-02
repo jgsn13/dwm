@@ -1,0 +1,60 @@
+#! /bin/bash
+
+interval=0
+
+_wlan() {
+    case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+        up) printf "^c#7aa2f7^^b#282a36^ 直 Up%s" " ^d^" ;;
+        down) printf "^c#ed0000^^b#282a36^ 睊 Down%s" " ^d^" ;;
+    esac
+}
+
+_batt() {
+    case "$(cat /sys/class/power_supply/BAT0/status)" in
+        Full) printf "^c#46e25b^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
+        Charging) printf "^c#ffaa00^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
+        Discharging) printf "^c#ff5f32^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
+    esac
+}
+
+_date() {
+    printf "^c#ff63dd^^b#282a36^  $(date '+%b %d ^d^^c#d444fc^  %H:%M')%s" " ^d^"
+}
+
+_vol() {
+    printf "^c#aa00ff^ 墳 $(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')%s" "% ^d^"
+}
+
+_mem() {
+    printf "^c#95ff49^^b#282a36^  $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)%s" " ^d^"
+}
+
+_cpu() {
+    printf "^c#ff6060^  $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')%s" "% ^d^"
+}
+
+_updates() {
+    updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+    # updates=$(doas xbps-install -un | wc -l) # void
+    # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+    if [ -z "$updates" ]; then
+        printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
+    else
+        printf "^c#3d6dff^^b#282a36^  $updates%s" " ^d^"
+    fi
+}
+
+_up_not_loaded() {
+    printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
+}
+
+_uptime() {
+    printf "^c#ff7f1e^ Up $(uptime --pretty | sed -e 's/up //g' -e 's/ days/d/g' -e 's/ day/d/g' -e 's/ hours/h/g' -e 's/ hour/h/g' -e 's/ minutes/m/g' -e 's/, / /g')%s" " ^d^"
+}
+
+while :; do
+    [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_up_not_loaded)
+    interval=$((interval + 1))
+
+    sleep 1 && xsetroot -name "$(_uptime)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+done
