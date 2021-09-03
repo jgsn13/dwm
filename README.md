@@ -18,7 +18,7 @@ make clean install
 
 
 ### Running dwm
-Add the following line to your .xinitrc (or any other xorg server starter) to start dwm using startx/xinit (or sx if you use it):
+Add the following line to your *.xinitrc* (or any other xorg server starter) to start dwm using *startx/xinit (or sx if you use it)*:
 ```
 exec dwm
 ```
@@ -43,10 +43,10 @@ exec dwm
 
 
 ### Configuration
-The configuration of dwm is done by editing config.def.h
+The configuration of dwm is done by editing *config.def.h*
 and (re)compiling the source code.
 
 
-#### Screenshots
+### Screenshots
 
 ![Look](screenshots/look.png)
