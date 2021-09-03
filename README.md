@@ -5,6 +5,8 @@ A fork of [dwm](https://dwm.suckless.org/), an extremely fast, small, and dynami
 ### Requirements
 In order to build dwm you need the Xlib header files.
 
+A [Nerd Font](https://www.nerdfonts.com) (I'm using **JetBrainsMono Nerd** btw) for the status bar.
+
 
 ### Installation
 Edit config.mk to match your local setup (dwm is installed into
