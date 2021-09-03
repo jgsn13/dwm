@@ -39,7 +39,7 @@ do
 done &
 exec dwm
 ```
-*I highly recommend that you use the* [script](scripts/dwm_status_bar.sh) *I made and run it in your .xinitrc before* `exec dwm`*.*
+**I highly recommend that you use the* [script](scripts/dwm_status_bar.sh) *I made and run it in your .xinitrc before* `exec dwm`*.**
 
 
 ### Configuration
