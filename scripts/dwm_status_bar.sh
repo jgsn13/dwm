@@ -12,8 +12,8 @@ _wlan() {
 _batt() {
     case "$(cat /sys/class/power_supply/BAT0/status)" in
         Full) printf "^c#46e25b^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
-        Charging) printf "^c#ffaa00^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
-        Discharging) printf "^c#ff5f32^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
+        Charging) printf "^c#ffaa00^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
+        Discharging) printf "^c#ff5f32^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
     esac
 }
 
