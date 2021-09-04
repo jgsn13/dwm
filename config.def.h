@@ -9,7 +9,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = {
-    "JetBrainsMono Nerd Font:pixelsize=15:antialias=true:autohint=true"
+    "JetBrainsMono Nerd Font:pixelsize=15:antialias=true:autohint=true",
+    "JoyPixels:pixelsize=15:antialias=true:autohint=true",
 };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
 static const char col_gray1[]       = "#1A1C24";
