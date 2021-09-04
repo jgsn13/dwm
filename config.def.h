@@ -9,14 +9,15 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = {
-    "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true"
+    "JetBrainsMono Nerd Font:pixelsize=15:antialias=true:autohint=true"
 };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
 static const char col_gray1[]       = "#1A1C24";
 static const char col_gray2[]       = "#363636";
 static const char col_gray3[]       = "#eeeeee";
-static const char col_gray4[]       = "#0FBFCF";
-static const char col_cyan[]        = "#282a36";
+static const char col_gray4[]       = "#17d676";
+static const char col_cyan[]        = "#2e2835";
+static const char col_bg[]          = "#09090c";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -24,21 +25,28 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-//static const char *tags[] = { "", "", "", "", "", "", ""/*, "", ""*/ };
-//static const char *tags[] = { "", "", "", "", "", "", ""/*, "", ""*/ };
-static const char *tags[] = { "", "", "", "", "", "", "", /*"", ""*/ };
+// static const char *tags[] = { "", "", "", "", "", "", "", /*"", ""*/ };
+static const char *tags[] = { "", "", "", "", "", "", "", "", /*, ""*/ };
 
-static const char *tagsel[][2] = {
-	{ "#f68f00", "#282a36"},
-    { "#fff04f", "#282a36"},
-	{ "#2eff16", "#282a36"},
-	{ "#4285f4", "#282a36"},
-    { "#de3c3c", "#282a36"},
-	{ "#ea3ae1", "#282a36"},
-    { "#00c9c9", "#282a36"},
-    { "#8900f2", "#282a36"},
-	{ "#ffffff", "#282a36"},
+static const unsigned int ulinepad	= 0;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
+
+static const char *tagsel[][2][2] = {
+	/*      norm                          sel       */
+	/*  fg          bg              fg          bg  */
+	{ { "#f68f00", col_gray1 }, { "#f68f00", col_cyan } },
+    { { "#de3c3c", col_gray1 }, { "#de3c3c", col_cyan } },
+	{ { "#2eff16", col_gray1 }, { "#2eff16", col_cyan } },
+	{ { "#4285f4", col_gray1 }, { "#4285f4", col_cyan } },
+    { { "#fff04f", col_gray1 }, { "#fff04f", col_cyan } },
+	{ { "#ea3ae1", col_gray1 }, { "#ea3ae1", col_cyan } },
+	{ { "#00c9c9", col_gray1 }, { "#00c9c9", col_cyan } },
+	{ { "#8900f2", col_gray1 }, { "#8900f2", col_cyan } },
+	{ { "#ffffff", col_gray1 }, { "#ffffff", col_cyan } },
 };
+
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -47,7 +55,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	//{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Viewnior",  NULL,       NULL,       1 << 6,         0,           -1 },
+	{ "Viewnior",  NULL,       NULL,       1 << 7,         0,           -1 },
     { "Firefox",   NULL,       NULL,       1 << 0,         0,           -1 },
 	{ "Navigator", "firefoxdeveloperedition",       NULL,       1 << 0,         0,           -1 },
 };
@@ -83,11 +91,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-c", NULL };
+static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-c", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *alacrittycmd[]  = { "alacritty", NULL };
 static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
-static const char *vifmcmd[]  = { "st", "-e", "vifm", NULL };
+static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
 static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
 static const char *ytopcmd[]  = { "st", "-e", "ytop", NULL };
 static const char *shutdown[]  = { "sudo", "shutdown", "-h", "now", NULL };
@@ -119,7 +127,7 @@ static Key keys[] = {
 	{ MODKEY|AltMask,               XK_m,      spawn,          {.v = volmute } },
 	{ MODKEY|AltMask,               XK_u,      spawn,          {.v = volunmute } },
 	{ MODKEY|AltMask,               XK_v,      spawn,          {.v = vimcmd } },
-	{ MODKEY|AltMask,               XK_f,      spawn,          {.v = vifmcmd } },
+	{ MODKEY|AltMask,               XK_f,      spawn,          {.v = rangercmd } },
 	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = ytopcmd } },
 	{ MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
@@ -158,6 +166,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
 	TAGKEYS(                        XK_7,                      6)
+	TAGKEYS(                        XK_8,                      7)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 

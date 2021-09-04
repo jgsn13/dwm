@@ -265,7 +265,8 @@ static Atom wmatom[WMLast], netatom[NetLast];
 static int running = 1;
 static Cur *cursor[CurLast];
 static Clr **scheme;
-static Clr **tagscheme;
+static Clr **tagschemenorm;
+static Clr **tagschemesel;
 static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
@@ -887,8 +888,10 @@ drawbar(Monitor *m)
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
-		drw_setscheme(drw, (m->tagset[m->seltags] & 1 << i ? tagscheme[i] : scheme[SchemeNorm]));
+		drw_setscheme(drw, (m->tagset[m->seltags] & 1 << i ? tagschemesel[i] : tagschemenorm[i]));
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+		if (ulineall || m->tagset[m->seltags] & 1 << i) /* if there are conflicts, just move these lines directly underneath both 'drw_setscheme' and 'drw_text' :) */
+			drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
 		if (occ & 1 << i)
 			drw_rect(drw, x + boxs, boxs, boxw, boxw,
 				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
@@ -1861,14 +1864,17 @@ setup(void)
 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
 	/* init appearance */
 	if (LENGTH(tags) > LENGTH(tagsel))
-		die("too few color schemes for the tags");
+		die("to few color schemes for the tags");
 	scheme = ecalloc(LENGTH(colors) + 1, sizeof(Clr *));
 	scheme[LENGTH(colors)] = drw_scm_create(drw, colors[0], 3);
 	for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 3);
-	tagscheme = ecalloc(LENGTH(tagsel), sizeof(Clr *));
+	tagschemenorm = ecalloc(LENGTH(tagsel), sizeof(Clr *));
 	for (i = 0; i < LENGTH(tagsel); i++)
-		tagscheme[i] = drw_scm_create(drw, tagsel[i], 2);
+		tagschemenorm[i] = drw_scm_create(drw, tagsel[i][0], 2);
+	tagschemesel = ecalloc(LENGTH(tagsel), sizeof(Clr *));
+	for (i = 0; i < LENGTH(tagsel); i++)
+		tagschemesel[i] = drw_scm_create(drw, tagsel[i][1], 2);
 	/* init bars */
 	updatebars();
 	updatestatus();
