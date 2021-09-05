@@ -48,10 +48,6 @@ _up_not_loaded() {
     printf ""
 }
 
-# _uptime() {
-#     printf "^c#ff7f1e^ Up $(uptime --pretty | sed -e 's/up //g' -e 's/ days/d/g' -e 's/ day/d/g' -e 's/ hours/h/g' -e 's/ hour/h/g' -e 's/ minutes/m/g' -e 's/, / /g')%s" " ^d^"
-# }
-
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_up_not_loaded)
     interval=$((interval + 1))
