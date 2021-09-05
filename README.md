@@ -24,6 +24,8 @@ In order to build dwm you need the Xlib header files.
 
 A [Nerd Font](https://www.nerdfonts.com) (I'm using **JetBrainsMono Nerd** btw) for the status bar.
 
+A compositor like **compton** or **picom**.
+
 **scrot** to take screenshots.
 
 **viewnior** to see the screenshot instantly (it will open automatically in the 8th tag).
