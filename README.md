@@ -7,15 +7,20 @@ In order to build dwm you need the Xlib header files.
 
 A [Nerd Font](https://www.nerdfonts.com) (I'm using **JetBrainsMono Nerd** btw) for the status bar.
 
+**`scrot`** to take screenshots.
+
+**viewnior** to see the screenshot instantly (it will open automatically in the 8th tag).
+
+***Don't use root user to install, use `sudo`, otherwise the makefile will create folders/files in the wrong place***
+
 
 ### Installation
 Edit config.mk to match your local setup (dwm is installed into
 the /usr/local namespace by default).
 
-Afterwards enter the following command to build and install dwm (if
-necessary as root):
+Afterwards enter the following command to build and install dwm:
 ```
-make clean install
+sudo make clean install
 ```
 
 

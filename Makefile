@@ -37,16 +37,21 @@ dist: clean
 	rm -rf dwm-${VERSION}
 
 install: all
-	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f dwm ${DESTDIR}${PREFIX}/bin
+	mkdir -pv ${DESTDIR}${PREFIX}/bin
+	mkdir -pv /home/${SUDO_USER}/Pictures/Screenshots
+	cp -fv dwm scripts/dwm_status_bar scripts/print_fullscreen scripts/print_select scripts/print_window ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
-	mkdir -p ${DESTDIR}${MANPREFIX}/man1
+	mkdir -pv ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	rm -rfv config.h
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
+		${DESTDIR}${PREFIX}/bin/dwm_status_bar\
+		${DESTDIR}${PREFIX}/bin/print_fullscreen\
+		${DESTDIR}${PREFIX}/bin/print_select\
+		${DESTDIR}${PREFIX}/bin/print_window\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 .PHONY: all options clean dist install uninstall

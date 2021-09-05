@@ -38,23 +38,23 @@ _updates() {
     # updates=$(doas xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
-        printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
+        printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
     else
-        printf "^c#3d6dff^^b#282a36^  $updates%s" " ^d^"
+        printf "^c#3d6dff^^b#282a36^  $updates%s" " ^d^"
     fi
 }
 
 _up_not_loaded() {
-    printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
+    printf ""
 }
 
-_uptime() {
-    printf "^c#ff7f1e^ Up $(uptime --pretty | sed -e 's/up //g' -e 's/ days/d/g' -e 's/ day/d/g' -e 's/ hours/h/g' -e 's/ hour/h/g' -e 's/ minutes/m/g' -e 's/, / /g')%s" " ^d^"
-}
+# _uptime() {
+#     printf "^c#ff7f1e^ Up $(uptime --pretty | sed -e 's/up //g' -e 's/ days/d/g' -e 's/ day/d/g' -e 's/ hours/h/g' -e 's/ hour/h/g' -e 's/ minutes/m/g' -e 's/, / /g')%s" " ^d^"
+# }
 
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_up_not_loaded)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_uptime)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
