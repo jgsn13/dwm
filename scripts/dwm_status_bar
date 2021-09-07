@@ -38,9 +38,9 @@ _updates() {
     # updates=$(doas xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
-        printf "^c#3d6dff^  0%s" " ^d^"
+        printf "^c#3d6dff^  0%s" " ^d^"
     else
-        printf "^c#3d6dff^  $updates%s" " ^d^"
+        printf "^c#3d6dff^  $updates%s" " ^d^"
     fi
 }
 

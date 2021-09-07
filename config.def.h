@@ -100,6 +100,7 @@ static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
 static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
 static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
 static const char *ytopcmd[]  = { "st", "-e", "ytop", NULL };
+static const char *dmenuemoji[]  = { "dmenuunicode", NULL };
 static const char *shutdown[]  = { "sudo", "shutdown", "-h", "now", NULL };
 static const char *reboot[]  = { "sudo", "reboot", NULL };
 
@@ -134,6 +135,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = reboot } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = dmenuemoji } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

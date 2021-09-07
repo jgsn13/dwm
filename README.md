@@ -36,6 +36,8 @@ A compositor like **compton** or **picom**.
 
 **amixer** to control the sound.
 
+**xdotool** if you want emojis.
+
 **nvim** (Optional) because there'is a keybind that launchs nvim inside st.
 
 **ytop** (Optional).
