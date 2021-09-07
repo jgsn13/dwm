@@ -10,10 +10,20 @@ _wlan() {
 }
 
 _batt() {
-    case "$(cat /sys/class/power_supply/BAT0/status)" in
-        Full) printf "^c#46e25b^^b#282a36^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
-        Charging) printf "^c#ffaa00^^b#282a36^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
-        Discharging) printf "^c#ff5f32^^b#282a36^  $(cat /sys/class/power_supply/BAT0/capacity)%s" "% ^d^" ;;
+    status=$(cat /sys/class/power_supply/BAT0/status)
+    capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+#     notify_sent=0
+#     if [ $notify_sent == 0 ] && [ "$status" == "Discharging" ] && [ "$capacity" == "92" ]; then
+#         notify-send --urgency=CRITICAL "Battery Low"
+#         notify_sent=1
+#     else if [ "$status" == "Charging" ] && [ "$capacity" == "92" ]; then
+#         notify_sent=0
+#     fi
+# 
+    case "$status" in
+        Full) printf "^c#46e25b^^b#282a36^  $capacity%s" "% ^d^" ;;
+        Charging) printf "^c#ffaa00^^b#282a36^  $capacity%s" "% ^d^" ;;
+        Discharging) printf "^c#ff5f32^^b#282a36^  $capacity%s" "% ^d^" ;;
     esac
 }
 
