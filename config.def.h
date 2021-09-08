@@ -104,6 +104,8 @@ static const char *dmenuemoji[]  = { "dmenuunicode", NULL };
 static const char *shutdown[]  = { "sudo", "shutdown", "-h", "now", NULL };
 static const char *reboot[]  = { "sudo", "reboot", NULL };
 
+static const char *copygittoken[]  = { "copygittoken", NULL };
+
 /* Custom scripts */
 /* Move the scripts on scripts folder to /bin */
 static const char *volup[] = { "amixer", "-q", "set", "Master", "5%+", NULL };
@@ -135,6 +137,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = reboot } },
+	{ MODKEY|ControlMask,           XK_g,      spawn,          {.v = copygittoken } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = dmenuemoji } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },

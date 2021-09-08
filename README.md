@@ -32,6 +32,8 @@ A compositor like **compton** or **picom**.
 
 **[st](https://github.com/JoaquimGregorio/st)** is the default terminal emulator (there's also a keybind to launch **alacritty**).
 
+**xclip** to copy to clipboard
+
 **dmenu** to launch applications.
 
 **amixer** to control the sound.
@@ -45,6 +47,8 @@ A compositor like **compton** or **picom**.
 **ranger** (Optional).
 
 **slock** (Optional).
+
+A file called **gittoken** in your home directory with your git token without blank spaces.
 
 ***Don't use root user to install, use `sudo`, otherwise the makefile will create folders/files in the wrong place***
 
