@@ -12,6 +12,8 @@ The installation will create 4 binaries in your system:
 - print_fullscreen
 - print_select
 - print_window
+- dmenuunicode
+- copygittoken
 You can modify them if you have problems or you just want to, and then you must (re)compile it. They are avaliable inside the [scripts](scripts) folder.
 
 All settings can be done in the [config.def.h](config.def.h) file if you don't like my settings, the installation process will remove the *config.h* file. I decided to did it because I don't like having two configuration files at the same time.
