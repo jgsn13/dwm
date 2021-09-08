@@ -25,7 +25,7 @@ Throughout the [config file](config.def.h) you can check the keybings and all de
 ### Requirements
 In order to build dwm you need the Xlib header files.
 
-A [Nerd Font](https://www.nerdfonts.com) (I'm using **JetBrainsMono Nerd** btw) for the status bar.
+A [Nerd Font](https://www.nerdfonts.com) (I'm using **JetBrainsMono Nerd** btw) and a font for emojis (you don't need if you won't use emojis on the status bar) (I'm using **Noto Color Emoji**).
 
 A compositor like **compton** or **picom**.
 
