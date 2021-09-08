@@ -35,7 +35,9 @@ A compositor like **compton** or **picom**.
 
 **[st](https://github.com/JoaquimGregorio/st)** is the default terminal emulator (there's also a keybind to launch **alacritty**).
 
-**xclip** to copy to clipboard
+**xclip** to copy to clipboard (it's used to copy emojis and the git token).
+
+**dunst** to handle notifications.
 
 **dmenu** to launch applications.
 
