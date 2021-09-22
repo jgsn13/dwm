@@ -1,8 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 12, .gappx = 12};
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 10};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -10,7 +10,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 22;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = {
-    "JetBrainsMono Nerd Font:pixelsize=15:antialias=true:autohint=true",
+    "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true",
     "Noto Color Emoji:pixelsize=15:antialias=true:autohint=true",
 };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
@@ -94,6 +94,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-c", NULL };
+static const char *roficmd[]  = { "rofi","-show", "drun", "-show-icons", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *alacrittycmd[]  = { "alacritty", NULL };
 static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
@@ -121,6 +122,7 @@ static const char *slock[]  = { "slock", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     { MODKEY|AltMask,               XK_Return, spawn,          {.v = alacrittycmd } },
 	{ 0,                            XK_Print,  spawn,          {.v = print_select } },
@@ -155,6 +157,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_q,      setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
