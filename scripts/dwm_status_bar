@@ -54,13 +54,13 @@ _updates() {
     fi
 }
 
-_up_not_loaded() {
-    printf ""
+_kernel() {
+    printf "^c#34dceb^^b#282a36^  $(uname -r)%s" " ^d^"
 }
 
 while :; do
-    [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_up_not_loaded)
+    [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_kernel)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
