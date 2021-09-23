@@ -10,8 +10,8 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 22;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
 static const char *fonts[]          = {
-    "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true",
-    "Noto Color Emoji:pixelsize=15:antialias=true:autohint=true",
+    "JetBrainsMono Nerd Font:pixelsize=13:antialias=true:autohint=true",
+    "Noto Color Emoji:pixelsize=14:antialias=true:autohint=true",
 };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:pixelsize=14:antialias=true:autohint=true";
 static const char col_gray1[]       = "#1A1C24";
@@ -28,7 +28,8 @@ static const char *colors[][3]      = {
 
 /* tagging */
 // static const char *tags[] = { "", "", "", "", "", "", "", /*"", ""*/ };
-static const char *tags[] = { "", "", "", "", "", "", "", "", /*, ""*/ };
+// static const char *tags[] = { "", "", "", "", "", "", "", "", /*, ""*/ };
+static const char *tags[] = { "web", "dev", "term", "file", "sett", "img" };
 
 static const unsigned int ulinepad	= 0;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
@@ -49,6 +50,27 @@ static const char *tagsel[][2][2] = {
 	{ { "#ffffff", col_gray1 }, { "#ffffff", col_cyan } },
 };
 
+/* launcher commands (They must be NULL terminated) */
+static const char* firefox[]      = { "firefox-developer-edition", NULL };
+static const char* nvim[]         = { "st", "-e", "nvim", NULL };
+static const char* pcmanfm[]         = { "pcmanfm", NULL };
+static const char* st[]         = { "st", NULL };
+
+static const Launcher launchers[] = {
+       /* command       name to display */
+	{ st,              "" },
+	{ firefox,         "" },
+    { nvim,            "" },
+    { pcmanfm,         "" },
+};
+
+static const char *taglauncher[][2] = {
+	/*  fg          bg     */
+    { "#2eff16", col_gray1 },
+	{ "#f68f00", col_gray1 },
+	{ "#74D05C", col_gray1 },
+    { "#4285f4", col_gray1 }
+};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -56,10 +78,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	//{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Viewnior",  NULL,       NULL,       1 << 7,         0,           -1 },
-    { "Firefox",   NULL,       NULL,       1 << 0,         0,           -1 },
-	{ "Navigator", "firefoxdeveloperedition",       NULL,       1 << 0,         0,           -1 },
+	{ "Viewnior",  NULL,       NULL,       1 << 5,         0,           -1 },
 };
 
 /* layout(s) */
@@ -76,8 +95,8 @@ static const Layout layouts[] = {
 };
 
 /* Winicon */
-#define ICONSIZE 18   /* icon size in pixels */
-#define ICONSPACING 5 /* space (pixels) between icon and title */
+#define ICONSIZE 16   /* icon size in pixels */
+#define ICONSPACING 6 /* space (pixels) between icon and title */
 
 /* key definitions */
 #define AltMask Mod1Mask
@@ -175,8 +194,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
 	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 

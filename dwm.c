@@ -134,6 +134,11 @@ typedef struct {
 	int monitor;
 } Rule;
 
+typedef struct {
+	const char** command;
+	const char* name;
+} Launcher;
+
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int *bw, int interact);
@@ -268,6 +273,7 @@ static Cur *cursor[CurLast];
 static Clr **scheme;
 static Clr **tagschemenorm;
 static Clr **tagschemesel;
+static Clr **launcherscheme;
 static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
@@ -494,9 +500,26 @@ buttonpress(XEvent *e)
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
-		} else if (ev->x < x + blw)
+			goto execute_handler;
+		} else if (ev->x < x + blw) {
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - (int)TEXTW(stext))
+			goto execute_handler;
+		}
+
+		x += blw;
+
+		for(i = 0; i < LENGTH(launchers); i++) {
+			x += TEXTW(launchers[i].name);
+			
+			if (ev->x < x) {
+				Arg a;
+				a.v = launchers[i].command;
+				spawn(&a);
+				return;
+			}
+		}	
+
+		if (ev->x > selmon->ww - TEXTW(stext))
 			click = ClkStatusText;
 		else
 			click = ClkWinTitle;
@@ -506,6 +529,9 @@ buttonpress(XEvent *e)
 		XAllowEvents(dpy, ReplayPointer, CurrentTime);
 		click = ClkClientWin;
 	}
+
+execute_handler:
+
 	for (i = 0; i < LENGTH(buttons); i++)
 		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
 		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
@@ -914,10 +940,18 @@ drawbar(Monitor *m)
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+	
+	for (i = 0; i < LENGTH(launchers); i++)
+	{
+		w = TEXTW(launchers[i].name);
+		drw_setscheme(drw, launcherscheme[i]);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, launchers[i].name, urg & 1 << i);
+		x += w;
+	}
 
 	if ((w = m->ww - tw - x) > bh) {
 		if (m->sel) {
-			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+			drw_setscheme(drw, scheme[SchemeNorm]);
 			drw_text(drw, x, 0, w, bh, lrpad / 2 + (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
 			if (m->sel->icon) drw_pic(drw, x + lrpad / 2, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
 			if (m->sel->isfloating)
@@ -1878,6 +1912,8 @@ setup(void)
 	/* init appearance */
 	if (LENGTH(tags) > LENGTH(tagsel))
 		die("to few color schemes for the tags");
+	if (LENGTH(launchers) > LENGTH(taglauncher))
+		die("to few color schemes for the launchers");
 	scheme = ecalloc(LENGTH(colors) + 1, sizeof(Clr *));
 	scheme[LENGTH(colors)] = drw_scm_create(drw, colors[0], 3);
 	for (i = 0; i < LENGTH(colors); i++)
@@ -1888,6 +1924,9 @@ setup(void)
 	tagschemesel = ecalloc(LENGTH(tagsel), sizeof(Clr *));
 	for (i = 0; i < LENGTH(tagsel); i++)
 		tagschemesel[i] = drw_scm_create(drw, tagsel[i][1], 2);
+	launcherscheme = ecalloc(LENGTH(taglauncher), sizeof(Clr *));
+	for (i = 0; i < LENGTH(taglauncher); i++)
+		launcherscheme[i] = drw_scm_create(drw, taglauncher[i], 2);
 	/* init bars */
 	updatebars();
 	updatestatus();
