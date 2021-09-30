@@ -50,28 +50,6 @@ static const char *tagsel[][2][2] = {
 	{ { "#ffffff", col_gray1 }, { "#ffffff", col_cyan } },
 };
 
-/* launcher commands (They must be NULL terminated) */
-static const char* firefox[]      = { "firefox-developer-edition", NULL };
-static const char* nvim[]         = { "st", "-e", "nvim", NULL };
-static const char* pcmanfm[]         = { "pcmanfm", NULL };
-static const char* st[]         = { "st", NULL };
-
-static const Launcher launchers[] = {
-       /* command       name to display */
-	{ st,              "" },
-	{ firefox,         "" },
-    { nvim,            "" },
-    { pcmanfm,         "" },
-};
-
-static const char *taglauncher[][2] = {
-	/*  fg          bg     */
-    { "#2eff16", col_gray1 },
-	{ "#f68f00", col_gray1 },
-	{ "#74D05C", col_gray1 },
-    { "#4285f4", col_gray1 }
-};
-
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -117,6 +95,7 @@ static const char *roficmd[]  = { "rofi","-show", "drun", "-show-icons", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *alacrittycmd[]  = { "alacritty", NULL };
 static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
+static const char *emacscmd[]  = { "emacs", NULL };
 static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
 static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
 static const char *ytopcmd[]  = { "st", "-e", "ytop", NULL };
@@ -153,6 +132,7 @@ static Key keys[] = {
 	{ MODKEY|AltMask,               XK_m,      spawn,          {.v = volmute } },
 	{ MODKEY|AltMask,               XK_u,      spawn,          {.v = volunmute } },
 	{ MODKEY|AltMask,               XK_v,      spawn,          {.v = vimcmd } },
+	{ MODKEY|AltMask,               XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|AltMask,               XK_f,      spawn,          {.v = rangercmd } },
 	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = ytopcmd } },
 	{ MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },

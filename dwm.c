@@ -134,11 +134,6 @@ typedef struct {
 	int monitor;
 } Rule;
 
-typedef struct {
-	const char** command;
-	const char* name;
-} Launcher;
-
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int *bw, int interact);
@@ -273,7 +268,6 @@ static Cur *cursor[CurLast];
 static Clr **scheme;
 static Clr **tagschemenorm;
 static Clr **tagschemesel;
-static Clr **launcherscheme;
 static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
@@ -316,7 +310,6 @@ struct Monitor {
 	const Layout *lt[2];
 	Pertag *pertag;
 };
-
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
@@ -507,17 +500,6 @@ buttonpress(XEvent *e)
 		}
 
 		x += blw;
-
-		for(i = 0; i < LENGTH(launchers); i++) {
-			x += TEXTW(launchers[i].name);
-			
-			if (ev->x < x) {
-				Arg a;
-				a.v = launchers[i].command;
-				spawn(&a);
-				return;
-			}
-		}	
 
 		if (ev->x > selmon->ww - TEXTW(stext))
 			click = ClkStatusText;
@@ -941,14 +923,6 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 	
-	for (i = 0; i < LENGTH(launchers); i++)
-	{
-		w = TEXTW(launchers[i].name);
-		drw_setscheme(drw, launcherscheme[i]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, launchers[i].name, urg & 1 << i);
-		x += w;
-	}
-
 	if ((w = m->ww - tw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[SchemeNorm]);
@@ -1912,8 +1886,6 @@ setup(void)
 	/* init appearance */
 	if (LENGTH(tags) > LENGTH(tagsel))
 		die("to few color schemes for the tags");
-	if (LENGTH(launchers) > LENGTH(taglauncher))
-		die("to few color schemes for the launchers");
 	scheme = ecalloc(LENGTH(colors) + 1, sizeof(Clr *));
 	scheme[LENGTH(colors)] = drw_scm_create(drw, colors[0], 3);
 	for (i = 0; i < LENGTH(colors); i++)
@@ -1924,9 +1896,6 @@ setup(void)
 	tagschemesel = ecalloc(LENGTH(tagsel), sizeof(Clr *));
 	for (i = 0; i < LENGTH(tagsel); i++)
 		tagschemesel[i] = drw_scm_create(drw, tagsel[i][1], 2);
-	launcherscheme = ecalloc(LENGTH(taglauncher), sizeof(Clr *));
-	for (i = 0; i < LENGTH(taglauncher); i++)
-		launcherscheme[i] = drw_scm_create(drw, taglauncher[i], 2);
 	/* init bars */
 	updatebars();
 	updatestatus();
