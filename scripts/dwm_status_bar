@@ -3,6 +3,7 @@
 interval=0
 
 _wlan() {
+    # iw dev wlp3s0 info | grep ssid | awk '{print $2}'
     case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
         up) printf "^c#7aa2f7^^b#282a36^ 直 Up%s" " ^d^" ;;
         down) printf "^c#ed0000^^b#282a36^ 睊 Down%s" " ^d^" ;;
@@ -36,15 +37,19 @@ _cpu() {
 }
 
 _updates() {
-    # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
-    updates=$(xbps-install -un | wc -l) # void
+    updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+    # updates=$(xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
-        printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
+        printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
     else
-        printf "^c#3d6dff^^b#282a36^  $updates%s" " ^d^"
+        printf "^c#3d6dff^^b#282a36^  $updates%s" " ^d^"
     fi
 }
+
+# _uname() {
+#     printf "^c#32a85e^  $(uname -r)%s" " ^d^"
+# }
 
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)

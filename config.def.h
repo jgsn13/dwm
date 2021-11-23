@@ -92,16 +92,17 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-c", NULL };
 static const char *roficmd[]  = { "rofi","-show", "drun", "-show-icons", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *stcmd[]  = { "st", NULL };
 static const char *alacrittycmd[]  = { "alacritty", NULL };
+static const char *kittycmd[]  = { "kitty", NULL };
 static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
 static const char *emacscmd[]  = { "emacs", NULL };
 static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
 static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
-static const char *ytopcmd[]  = { "st", "-e", "ytop", NULL };
+static const char *bpytopcmd[]  = { "st", "-e", "bpytop", NULL };
 static const char *dmenuemoji[]  = { "dmenuunicode", NULL };
-static const char *shutdown[]  = { "sudo", "shutdown", "-h", "now", NULL };
-static const char *reboot[]  = { "sudo", "reboot", NULL };
+static const char *shutdown[]  = { "shutdown", "-h", "now", NULL };
+static const char *reboot[]  = { "reboot", NULL };
 
 static const char *copygittoken[]  = { "copygittoken", NULL };
 
@@ -119,10 +120,10 @@ static const char *slock[]  = { "slock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY|AltMask,               XK_Return, spawn,          {.v = alacrittycmd } },
+	{ MODKEY,                       XK_space,  spawn,          {.v = roficmd } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = stcmd } },
+    { MODKEY|AltMask,               XK_Return, spawn,          {.v = kittycmd } },
 	{ 0,                            XK_Print,  spawn,          {.v = print_select } },
 	{ ControlMask,                  XK_Print,  spawn,          {.v = print_fullscreen } },
 	{ ControlMask|ShiftMask,        XK_Print,  spawn,          {.v = print_window } },
@@ -134,7 +135,7 @@ static Key keys[] = {
 	{ MODKEY|AltMask,               XK_v,      spawn,          {.v = vimcmd } },
 	{ MODKEY|AltMask,               XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|AltMask,               XK_f,      spawn,          {.v = rangercmd } },
-	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = ytopcmd } },
+	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = bpytopcmd } },
 	{ MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = reboot } },
@@ -184,7 +185,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = kittycmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
