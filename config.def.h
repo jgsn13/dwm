@@ -100,23 +100,29 @@ static const char *emacscmd[]  = { "emacs", NULL };
 static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
 static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
 static const char *bpytopcmd[]  = { "st", "-e", "bpytop", NULL };
-static const char *dmenuemoji[]  = { "dmenuunicode", NULL };
+
+/* Actions */
 static const char *shutdown[]  = { "shutdown", "-h", "now", NULL };
 static const char *reboot[]  = { "reboot", NULL };
-
-static const char *copygittoken[]  = { "copygittoken", NULL };
+static const char *slock[]  = { "slock", NULL };
+static const char *xkill[]  = { "xkill", NULL };
+static const char *rofimoji[]  = { "rofimoji", NULL };
+static const char *roficalc[]  = { "rofi", "-show", "calc", NULL };
 
 /* Custom scripts */
+/* look at the scripts folder */
+static const char *dmenuemoji[]  = { "dmenuunicode", NULL };
+static const char *print_select[] = { "print_select", NULL };
+static const char *print_fullscreen[] = { "print_fullscreen", NULL };
+static const char *print_window[] = { "print_window", NULL };
+static const char *copygittoken[]  = { "copygittoken", NULL };
+
 /* Move the scripts on scripts folder to /bin */
 static const char *volup[] = { "amixer", "-q", "set", "Master", "5%+", NULL };
 static const char *voldown[] = { "amixer", "-q", "set", "Master", "5%-", NULL };
 static const char *volmute[] = { "amixer", "-q", "set", "Master", "0%", NULL };
-static const char *volunmute[] = { "amixer", "-q", "set", "Master", "51%", NULL };
-static const char *print_select[] = { "print_select", NULL };
-static const char *print_fullscreen[] = { "print_fullscreen", NULL };
-static const char *print_window[] = { "print_window", NULL };
+static const char *volunmute[] = { "amixer", "-q", "set", "Master", "60%", NULL };
 
-static const char *slock[]  = { "slock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -140,7 +146,10 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = reboot } },
 	{ MODKEY|ControlMask,           XK_g,      spawn,          {.v = copygittoken } },
+	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = rofimoji } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = dmenuemoji } },
+    { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = roficalc } },
+    { MODKEY|ControlMask,           XK_x,      spawn,          {.v = xkill } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -150,7 +159,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
