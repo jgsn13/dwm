@@ -47,13 +47,13 @@ _updates() {
     fi
 }
 
-# _uname() {
-#     printf "^c#32a85e^  $(uname -r)%s" " ^d^"
-# }
+_uname() {
+    printf "^c#32a85e^  $(uname -r)%s" " ^d^"
+}
 
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_uname)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
