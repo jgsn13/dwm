@@ -41,19 +41,15 @@ _updates() {
     # updates=$(xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
-        printf "^c#3d6dff^^b#282a36^  0%s" " ^d^"
+        printf "^c#3d6dff^^b#282a36^  0 updates%s" " ^d^"
     else
-        printf "^c#3d6dff^^b#282a36^  $updates%s" " ^d^"
+        printf "^c#3d6dff^^b#282a36^  $updates updates%s" " ^d^"
     fi
-}
-
-_uname() {
-    printf "^c#32a85e^  $(uname -r)%s" " ^d^"
 }
 
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_uname)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
