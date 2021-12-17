@@ -93,7 +93,6 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-c", NULL };
 static const char *roficmd[]  = { "rofi","-show", "drun", "-show-icons", NULL };
 static const char *stcmd[]  = { "st", NULL };
-static const char *alacrittycmd[]  = { "alacritty", NULL };
 static const char *kittycmd[]  = { "kitty", NULL };
 static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
 static const char *emacscmd[]  = { "emacs", NULL };
