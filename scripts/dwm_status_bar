@@ -2,11 +2,57 @@
 
 interval=0
 
+# _wlan() {
+#     # iw dev wlp3s0 info | grep ssid | awk '{print $2}'
+#     case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+#         up) printf "^c#7aa2f7^^b#282a36^ 說 Up%s" " ^d^" ;;
+#         down) printf "^c#ed0000^^b#282a36^ ﲁ Down%s" " ^d^" ;;
+#     esac
+# }
+# 
+# _batt() {
+#     status=$(cat /sys/class/power_supply/BAT0/status)
+#     capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+#     case "$status" in
+#         Full) printf "^c#46e25b^  $capacity%s" "% ^d^" ;;
+#         Charging) printf "^c#ffaa00^  $capacity%s" "% ^d^" ;;
+#         Discharging) printf "^c#ff5f32^  $capacity%s" "% ^d^" ;;
+#     esac
+# }
+# 
+# _date() {
+#     printf "^c#ff63dd^^b#282a36^  $(date '+%b %d ^d^^c#d444fc^  %H:%M')%s" " ^d^"
+# }
+# 
+# _vol() {
+#     printf "^c#aa00ff^ 墳 $(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')%s" "% ^d^"
+# }
+# 
+# _mem() {
+#     printf "^c#95ff49^^b#282a36^  $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)%s" " ^d^"
+# }
+# 
+# _cpu() {
+#     printf "^c#ff6060^  $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')%s" "% ^d^"
+# }
+# 
+# _updates() {
+#     # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+#     updates=$(xbps-install -un | wc -l) # void
+#     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+#     if [ -z "$updates" ]; then
+#         printf "^c#3d6dff^^b#282a36^  0 updates%s" " ^d^"
+#     else
+#         printf "^c#3d6dff^^b#282a36^  $updates updates%s" " ^d^"
+#     fi
+# }
+
+## NO COLOR ##
 _wlan() {
     # iw dev wlp3s0 info | grep ssid | awk '{print $2}'
     case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-        up) printf "^c#7aa2f7^^b#282a36^ 直 Up%s" " ^d^" ;;
-        down) printf "^c#ed0000^^b#282a36^ 睊 Down%s" " ^d^" ;;
+        up) printf " 說 Up" ;;
+        down) printf " ﲁ Down" ;;
     esac
 }
 
@@ -14,42 +60,41 @@ _batt() {
     status=$(cat /sys/class/power_supply/BAT0/status)
     capacity=$(cat /sys/class/power_supply/BAT0/capacity)
     case "$status" in
-        Full) printf "^c#46e25b^  $capacity%s" "% ^d^" ;;
-        Charging) printf "^c#ffaa00^  $capacity%s" "% ^d^" ;;
-        Discharging) printf "^c#ff5f32^  $capacity%s" "% ^d^" ;;
+        Full) printf "  $capacity%s" "%" ;;
+        Charging) printf "  $capacity%s" "%" ;;
+        Discharging) printf "  $capacity%s" "%" ;;
     esac
 }
 
 _date() {
-    printf "^c#ff63dd^^b#282a36^  $(date '+%b %d ^d^^c#d444fc^  %H:%M')%s" " ^d^"
+    printf "  $(date '+%b %d  %H:%M')"
 }
 
 _vol() {
-    printf "^c#aa00ff^ 墳 $(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')%s" "% ^d^"
+    printf " 墳 $(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')%s" "%"
 }
 
 _mem() {
-    printf "^c#95ff49^^b#282a36^  $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)%s" " ^d^"
+    printf "  $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
 }
 
 _cpu() {
-    printf "^c#ff6060^  $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')%s" "% ^d^"
+    printf "  $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')"
 }
 
 _updates() {
-    updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
-    # updates=$(xbps-install -un | wc -l) # void
+    # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+    updates=$(xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
-        printf "^c#3d6dff^^b#282a36^  0 updates%s" " ^d^"
+        printf "  0 updates"
     else
-        printf "^c#3d6dff^^b#282a36^  $updates updates%s" " ^d^"
+        printf "  $updates updates"
     fi
 }
-
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
