@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 10};
+static const Gap default_gap        = {.isgap = 1, .realgap = 6, .gappx = 6};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int scalepreview       = 4;        /* Tag preview scaling */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -28,8 +28,8 @@ static const char *colors[][3]      = {
 
 /* tagging */
 // static const char *tags[] = { "", "", "", "", "", "", "", "", /*, ""*/ };
-// static const char *tags[] = { "web", "dev", "term", "file", "sett", "img" };
-static const char *tags[] = { "", "", "", "", "", "", "", /*"", ""*/ };
+// static const char *tags[] = { "", "", "", "", "", "", "", /*"", ""*/ };
+static const char *tags[] = { "web", "dev", "term", "file", "data", "sett", "img" };
 
 static const unsigned int ulinepad	= 0;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
@@ -56,7 +56,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Viewnior",  NULL,       NULL,       1 << 5,         0,           -1 },
+	{ "Viewnior",  NULL,       NULL,       1 << 6,         0,           -1 },
 };
 
 /* layout(s) */
@@ -94,11 +94,11 @@ static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m", dme
 static const char *roficmd[]  = { "rofi","-show", "drun", "-show-icons", NULL };
 static const char *stcmd[]  = { "st", NULL };
 static const char *kittycmd[]  = { "kitty", NULL };
-static const char *vimcmd[]  = { "st", "-e", "nvim", NULL };
+static const char *vimcmd[]  = { "st", "-e", "nvim-qt", NULL };
 static const char *emacscmd[]  = { "emacs", NULL };
 static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
-static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
-static const char *bpytopcmd[]  = { "st", "-e", "bpytop", NULL };
+// static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
+static const char *bottomcmd[]  = { "st", "-e", "btm", NULL };
 
 /* Actions */
 static const char *shutdown[]  = { "shutdown", "-h", "now", NULL };
@@ -140,8 +140,8 @@ static Key keys[] = {
 	{ MODKEY|AltMask,               XK_v,      spawn,          {.v = vimcmd } },
 	{ MODKEY|AltMask,               XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|AltMask,               XK_f,      spawn,          {.v = rangercmd } },
-	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = bpytopcmd } },
-	{ MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
+	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = bottomcmd } },
+	// { MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = reboot } },
 	{ MODKEY|ControlMask,           XK_g,      spawn,          {.v = copygittoken } },
@@ -165,6 +165,22 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,      setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
+	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
+	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
+	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
+	{ MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
+	{ MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
+	{ MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
+	{ MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
+	{ MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
+	{ MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
