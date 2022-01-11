@@ -82,9 +82,9 @@ static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
+    { "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "[M]",      monocle },
-    { "><>",      NULL },    /* no layout function means floating behavior */
 };
 
 /* Winicon */
@@ -110,8 +110,6 @@ static const char *dmenucmd[] = { "dmenu_run", "-p", "Run", "-m", dmenumon, "-fn
 static const char *roficmd[]  = { "rofi","-show", "drun", "-show-icons", NULL };
 static const char *stcmd[]  = { "st", NULL };
 static const char *kittycmd[]  = { "kitty", NULL };
-static const char *vimcmd[]  = { "nvim-qt", NULL };
-static const char *emacscmd[]  = { "emacs", NULL };
 static const char *rangercmd[]  = { "st", "-e", "ranger", NULL };
 // static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
 static const char *bottomcmd[]  = { "st", "-e", "btm", NULL };
@@ -145,20 +143,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = stcmd } },
     { MODKEY|AltMask,               XK_Return, spawn,          {.v = kittycmd } },
-	{ 0,                            XK_Print,  spawn,          {.v = print_select } },
-	{ ControlMask,                  XK_Print,  spawn,          {.v = print_fullscreen } },
-	{ ControlMask|ShiftMask,        XK_Print,  spawn,          {.v = print_window } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = print_select } },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = print_fullscreen } },
+	{ MODKEY|ControlMask|ShiftMask, XK_p,      spawn,          {.v = print_window } },
     { MODKEY,                       XK_l,      spawn,          {.v = slock } },
 	{ MODKEY|AltMask,               XK_k,      spawn,          {.v = volup } },
     { MODKEY|AltMask,               XK_j,      spawn,          {.v = voldown } },
 	{ MODKEY|AltMask,               XK_m,      spawn,          {.v = volmute } },
 	{ MODKEY|AltMask,               XK_u,      spawn,          {.v = volunmute } },
-	{ MODKEY|AltMask,               XK_v,      spawn,          {.v = vimcmd } },
-	{ MODKEY|AltMask,               XK_e,      spawn,          {.v = emacscmd } },
 	{ MODKEY|AltMask,               XK_f,      spawn,          {.v = rangercmd } },
 	{ MODKEY|ControlMask,           XK_m,      spawn,          {.v = bottomcmd } },
 	// { MODKEY|ControlMask,           XK_n,      spawn,          {.v = nmtuicmd } },
-	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = shutdown } },
+	{ MODKEY|ControlMask,           XK_s,      spawn,          {.v = shutdown } },
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = reboot } },
 	{ MODKEY|ControlMask,           XK_g,      spawn,          {.v = copygittoken } },
 	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = rofimoji } },
