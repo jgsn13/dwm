@@ -136,6 +136,10 @@ static const char *voldown[] = { "amixer", "-q", "set", "Master", "5%-", NULL };
 static const char *volmute[] = { "amixer", "-q", "set", "Master", "0%", NULL };
 static const char *volunmute[] = { "amixer", "-q", "set", "Master", "60%", NULL };
 
+// Change keyboard layout
+static const char *setkbmapbr[] = { "setxkbmap", "br", NULL };
+static const char *setkbmapus[] = { "setxkbmap", "us", NULL };
+
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -161,6 +165,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      spawn,          {.v = dmenuemoji } },
     { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = roficalc } },
     { MODKEY|ControlMask,           XK_x,      spawn,          {.v = xkill } },
+    { MODKEY|ControlMask,           XK_b,      spawn,          {.v = setkbmapbr } },
+    { MODKEY|ControlMask,           XK_u,      spawn,          {.v = setkbmapus } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
