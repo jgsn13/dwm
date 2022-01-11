@@ -92,9 +92,14 @@ _updates() {
         printf "  $updates updates"
     fi
 }
+
+_keyboard() {
+    layout=$(setxkbmap -query | grep layout | awk '{print $2}')
+    printf "  $layout"
+}
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_keyboard)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
