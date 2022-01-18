@@ -82,16 +82,16 @@ _cpu() {
     printf "  $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')"
 }
 
-_updates() {
-    # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
-    updates=$(xbps-install -un | wc -l) # void
-    # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
-    if [ -z "$updates" ]; then
-        printf "  0 updates"
-    else
-        printf "  $updates updates"
-    fi
-}
+# _updates() {
+#     # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+#     updates=$(xbps-install -un | wc -l) # void
+#     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+#     if [ -z "$updates" ]; then
+#         printf "  0 updates"
+#     else
+#         printf "  $updates updates"
+#     fi
+# }
 
 _keyboard() {
     layout=$(setxkbmap -query | grep layout | awk '{print $2}')
@@ -101,5 +101,5 @@ while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_keyboard)$(_updates)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_keyboard)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
