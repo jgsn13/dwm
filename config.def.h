@@ -11,10 +11,10 @@ static const int user_bh = 22; /* 0 means that dwm will calculate bar height, >=
                                   1 means dwm will user_bh as bar height */
 static const Bool viewontag = True; /* Switch view on tag switch */
 static const char *fonts[] = {
-    "JetBrainsMono NF:size=10",
+    "JetBrainsMono NF:style:medium:size=10",
     "Noto Color Emoji:size=10",
 };
-static const char dmenufont[] = "JetBrainsMono NF:size=9";
+static const char dmenufont[] = "JetBrainsMono NF:style:medium:size=10";
 static const char col_gray1[] = "#0d1012";
 static const char col_gray2[] = "#171716";
 static const char col_gray3[] = "#eeeeee";
@@ -91,29 +91,13 @@ static const Layout layouts[] = {
   }
 
 /* commands */
-static char dmenumon[2] =
-    "0"; /* component of dmenucmd, manipulated in spawn() */
-// static const char *dmenucmd[] = { "dmenu_run","-l", "10", "-p", "Run", "-m",
-// dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_gray3, "-sb", col_cyan,
-// "-sf", col_gray4, "-c", NULL };
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {
     "dmenu_run", "-p",  "Run",     "-m",  dmenumon, "-fn", dmenufont, "-nb",
     col_gray1,   "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL};
-static const char *roficmd[] = {"rofi", "-show", "drun", "-show-icons", NULL};
-static const char *stcmd[] = {"st", NULL};
-static const char *kittycmd[] = {"kitty", NULL};
-static const char *rangercmd[] = {"st", "-e", "ranger", NULL};
-// static const char *nmtuicmd[]  = { "st", "-e", "nmtui", NULL };
-static const char *bottomcmd[] = {"st", "-e", "btm", NULL};
-static const char *emacsclientcmd[] = {"emacsclient", "-c", NULL};
+static const char *term[] = {"st", NULL};
 
 /* Actions */
-static const char *shutdown[] = {"sudo", "shutdown", "-h", "now", NULL};
-static const char *reboot[] = {"sudo", "reboot", NULL};
-static const char *slock[] = {"slock", NULL};
-static const char *xkill[] = {"xkill", NULL};
-static const char *rofimoji[] = {"rofimoji", NULL};
-static const char *roficalc[] = {"rofi", "-show", "calc", NULL};
 
 /* Custom scripts */
 /* look at the scripts folder */
@@ -129,16 +113,27 @@ static const char *voldown[] = {"amixer", "-q", "set", "Master", "5%-", NULL};
 static const char *volmute[] = {"amixer", "-q", "set", "Master", "0%", NULL};
 static const char *volunmute[] = {"amixer", "-q", "set", "Master", "60%", NULL};
 
-// Change keyboard layout
-static const char *setkbmapbr[] = {"setxkbmap", "br", NULL};
-static const char *setkbmapus[] = {"setxkbmap", "us", NULL};
+// commands
+static const char *rofi[] = {"rofi", "-show", "drun", "-show-icons", NULL};
+static const char *mapbr[] = {"setxkbmap", "br", NULL};
+static const char *mapus[] = {"setxkbmap", "us", NULL};
+static const char *ranger[] = {"st", "-e", "ranger", NULL};
+static const char *bottom[] = {"st", "-e", "btm", NULL};
+static const char *shutdown[] = {"sudo", "shutdown", "-h", "now", NULL};
+static const char *reboot[] = {"sudo", "reboot", NULL};
+static const char *slock[] = {"slock", NULL};
+static const char *xkill[] = {"xkill", NULL};
+static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
+static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 
 static Key keys[] = {
     /* modifier                        key            function           argument */
     {MODKEY,                           XK_space,      spawn,             {.v = dmenucmd}},
-    {MODKEY,                           XK_d,          spawn,             {.v = roficmd}},
-    {MODKEY,                           XK_Return,     spawn,             {.v = stcmd}},
-    {MODKEY|AltMask,                   XK_Return,     spawn,             {.v = kittycmd}},
+    {MODKEY,                           XK_Return,     spawn,             {.v = term}},
+
+    // custom
+    
+    {MODKEY,                           XK_d,          spawn,             {.v = rofi}},
     {MODKEY,                           XK_p,          spawn,             {.v = print_select}},
     {MODKEY|ControlMask,               XK_p,          spawn,             {.v = print_fullscreen}},
     {MODKEY|ControlMask|ShiftMask,     XK_p,          spawn,             {.v = print_window}},
@@ -147,18 +142,18 @@ static Key keys[] = {
     {MODKEY|AltMask,                   XK_j,          spawn,             {.v = voldown}},
     {MODKEY|AltMask,                   XK_m,          spawn,             {.v = volmute}},
     {MODKEY|AltMask,                   XK_u,          spawn,             {.v = volunmute}},
-    {MODKEY|AltMask,                   XK_f,          spawn,             {.v = rangercmd}},
-    {MODKEY|ControlMask,               XK_m,          spawn,             {.v = bottomcmd}},
-    {MODKEY|AltMask,                   XK_e,          spawn,             {.v = emacsclientcmd}},
+    {MODKEY|AltMask,                   XK_f,          spawn,             {.v = ranger}},
+    {MODKEY|ControlMask,               XK_m,          spawn,             {.v = bottom}},
     {MODKEY|ControlMask,               XK_s,          spawn,             {.v = shutdown}},
     {MODKEY|ControlMask,               XK_r,          spawn,             {.v = reboot}},
     {MODKEY|ControlMask,               XK_g,          spawn,             {.v = copygittoken}},
-    {MODKEY|ControlMask,               XK_e,          spawn,             {.v = rofimoji}},
     {MODKEY,                           XK_e,          spawn,             {.v = dmenuemoji}},
-    {MODKEY|ShiftMask,                 XK_c,          spawn,             {.v = roficalc}},
     {MODKEY|ControlMask,               XK_x,          spawn,             {.v = xkill}},
-    {MODKEY|ControlMask,               XK_b,          spawn,             {.v = setkbmapbr}},
-    {MODKEY|ControlMask,               XK_u,          spawn,             {.v = setkbmapus}},
+    {MODKEY|ControlMask,               XK_b,          spawn,             {.v = mapbr}},
+    {MODKEY|ControlMask,               XK_u,          spawn,             {.v = mapus}},
+
+    // other
+
     {MODKEY,                           XK_b,          togglebar,         {0}},
     {MODKEY,                           XK_j,          focusstack,        {.i = +1}},
     {MODKEY,                           XK_k,          focusstack,        {.i = -1}},
