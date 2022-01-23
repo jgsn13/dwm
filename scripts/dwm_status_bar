@@ -30,6 +30,7 @@ _wlan() {
 }
 
 _vol() {
+    # needs alsa-utils
     printf " 墳^c$white^ $(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')%s" "% ^d^"
 }
 
@@ -44,6 +45,7 @@ _cpu() {
 _brightness() {
     brightness=$(cat /sys/class/backlight/*/brightness)
     percentage=$((brightness / 60)) # if brightness == 6000
+    percentage="$percentage"
     printf " ^c$white^ $percentage%s" "% ^d^"
 }
 
