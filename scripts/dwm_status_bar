@@ -12,12 +12,8 @@ darkblue=#668ee3
 
 interval=0
 
-_wlan() {
-    # iw dev wlp3s0 info | grep ssid | awk '{print $2}'
-    case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-	    up) printf " ^c$blue^ %s" "Up ^d^" ;;
-	    down) printf " ﲁ^c$red^ %s" "Down ^d^" ;;
-    esac
+_date() {
+    printf " ^c$darkblue^ $(date '+%b %d ^d^ ^c#d47d85^ %H:%M')%s" " ^d^"
 }
 
 _batt() {
@@ -25,8 +21,12 @@ _batt() {
     printf " ^c$green^ $get_capacity%s" "% ^d^"
 }
 
-_date() {
-    printf " ^c$darkblue^ $(date '+%b %d ^d^ ^c#d47d85^ %H:%M')%s" " ^d^"
+_wlan() {
+    # iw dev wlp3s0 info | grep ssid | awk '{print $2}'
+    case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+	    up) printf " ^c$blue^ %s" "Up ^d^" ;;
+	    down) printf " ﲁ^c$red^ %s" "Down ^d^" ;;
+    esac
 }
 
 _vol() {
@@ -41,6 +41,17 @@ _cpu() {
     printf " ^c$red^ $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')%s" "% ^d^"
 }
 
+_brightness() {
+    brightness=$(cat /sys/class/backlight/*/brightness)
+    percentage=$((brightness / 60)) # if brightness == 6000
+    printf " ^c$white^ $percentage%s" "% ^d^"
+}
+
+_keyboard() {
+    layout=$(setxkbmap -query | grep layout | awk '{print $2}')
+    printf " ^c$darkblue^ $layout%s" " ^d^"
+}
+
 # _updates() {
 #     # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
 #     updates=$(xbps-install -un | wc -l) # void
@@ -52,14 +63,9 @@ _cpu() {
 #     fi
 # }
 
-_keyboard() {
-    layout=$(setxkbmap -query | grep layout | awk '{print $2}')
-    printf " ^c$darkblue^ $layout%s" " ^d^"
-}
-
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_keyboard)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_keyboard)$(_brightness)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
