@@ -151,6 +151,8 @@ static Key keys[] = {
     {MODKEY|ControlMask,               XK_x,          spawn,             {.v = xkill}},
     {MODKEY|ControlMask,               XK_b,          spawn,             {.v = mapbr}},
     {MODKEY|ControlMask,               XK_u,          spawn,             {.v = mapus}},
+    {MODKEY|ControlMask,               XK_k,          spawn,             {.v = xi}},
+    {MODKEY|ControlMask,               XK_j,          spawn,             {.v = xd}},
 
     // other
 
