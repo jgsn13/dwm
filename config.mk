@@ -19,6 +19,7 @@ FREETYPELIBS = -lfontconfig -lXft
 FREETYPEINC = /usr/include/freetype2
 # OpenBSD (uncomment)
 #FREETYPEINC = ${X11INC}/freetype2
+#KVMLIB = -lkvm
 
 # Tag previews are done with Imlib2
 IMLIB2LIBS = -lImlib2
@@ -26,7 +27,7 @@ IMLIB2LIBS = -lImlib2
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC}
 
-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} ${IMLIB2LIBS} -lXrender
+LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} ${IMLIB2LIBS} -lXrender -lX11-xcb -lxcb -lxcb-res ${KVMLIB}
 
 # flags
 CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
