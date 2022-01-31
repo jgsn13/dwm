@@ -2108,7 +2108,7 @@ void tile(Monitor *m) {
     return;
 
   if (n == 1)
-    bw = 0;
+    bw = single_borderpx;
   else
     bw = borderpx;
   if (n > m->nmaster)

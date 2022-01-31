@@ -2,6 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx = 2; /* border pixel of windows */
+static const unsigned int single_borderpx = 1; /* border pixel of single windows */
 static const Gap default_gap = {.isgap = 1, .realgap = 0, .gappx = 0};
 static const unsigned int snap = 32; /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
