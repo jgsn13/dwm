@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx = 2; /* border pixel of windows */
-static const unsigned int single_borderpx = 1; /* border pixel of single windows */
+static const unsigned int single_borderpx = 0; /* border pixel of single windows */
 static const Gap default_gap = {.isgap = 1, .realgap = 0, .gappx = 0};
 static const unsigned int snap = 32; /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
@@ -16,7 +16,7 @@ static const char *fonts[] = {
     "JetBrainsMono NF:style:medium:size=10",
     "Noto Color Emoji:size=10",
 };
-static const char dmenufont[] = "JetBrainsMono NF:style:medium:size=10";
+static const char dmenufont[] = "JetBrainsMono NF:style:medium:size=11";
 static const char col_gray1[] = "#0d1012";
 static const char col_gray2[] = "#171716";
 static const char col_gray3[] = "#eeeeee";
@@ -30,7 +30,7 @@ static const char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = {"", "", "", "", "", ""};
+static const char *tags[] = {"", "", "", "", "", ""};
 
 static const unsigned int ulinepad = 0; /* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke = 2; /* thickness / height of the underline */
@@ -59,7 +59,6 @@ static const Rule rules[] = {
     /* class         instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
     {"Viewnior",     NULL,     NULL,           1 << 5,    0,         -1,           0,        -1 },
     { "Gimp",        NULL,     NULL,           0,         1,          0,           0,        -1 },
-    // { "Firefox",     NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
     { "st-256color", NULL,     NULL,           0,         0,          1,           0,        -1 },
     { NULL,          NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
