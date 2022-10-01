@@ -13,7 +13,7 @@ darkblue=#668ee3
 interval=0
 
 _date() {
-    printf " ^c$darkblue^ $(date '+%b %d (%a) ^d^ ^c#d47d85^ %H:%M')%s" " ^d^"
+    printf " ^c$darkblue^ $(date '+%b %d (%a) ^d^ ^c#d47d85^ %H:%M')%s" " ^d^ "
 }
 
 _batt() {
@@ -69,5 +69,5 @@ while :; do
     [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_updates)$(_keyboard)$(_brightness)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_updates)$(_brightness)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
