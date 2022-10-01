@@ -17,8 +17,8 @@ static const int showbar = 1;     /* 0 means no bar */
 static const int topbar = 1;      /* 0 means bottom bar */
 static const int vertpad = 5;     /* vertical padding of bar */
 static const int sidepad = 5;     /* horizontal padding of bar */
-static const char *fonts[] = {"monospace:size=10"};
-static const char dmenufont[] = "monospace:size=10";
+static const char *fonts[] = {"Hack NF:size=10"};
+static const char dmenufont[] = "Hack NF:size=10";
 static const char col_gray1[] = "#0d1012";
 static const char col_gray2[] = "#171716";
 static const char col_gray3[] = "#eeeeee";
