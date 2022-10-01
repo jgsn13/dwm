@@ -54,20 +54,20 @@ _keyboard() {
     printf " ^c$darkblue^ $layout%s" " ^d^"
 }
 
-# _updates() {
-#     # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
-#     updates=$(xbps-install -un | wc -l) # void
-#     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
-#     if [ -z "$updates" ]; then
-#         printf " ^c#3d6dff^ 0 updates%s" " ^d^"
-#     else
-#         printf " ^c#3d6dff^ $updates updates%s" " ^d^"
-#     fi
-# }
+_updates() {
+    updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+    # updates=$(xbps-install -un | wc -l) # void
+    # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+    if [ -z "$updates" ]; then
+        printf " ^c#3d6dff^ 0 updates%s" " ^d^"
+    else
+        printf " ^c#3d6dff^ $updates updates%s" " ^d^"
+    fi
+}
 
 while :; do
     [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_keyboard)$(_brightness)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+    sleep 1 && xsetroot -name "$(_updates)$(_keyboard)$(_brightness)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
 done
