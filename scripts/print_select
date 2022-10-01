@@ -1,0 +1,2 @@
+#! /bin/sh
+scrot -s 'Screenshot_%Y-%m-%d-%S_$wx$h.png' -e "mv \$f /home/$USER/Pictures/Screenshots ; viewnior /home/$USER/Pictures/Screenshots/\$f"

@@ -1,0 +1,73 @@
+#! /bin/bash
+
+# colors
+bg=#14181c
+black=#1e222a
+green=#7eca9c
+white=#abb2bf
+grey=#282c34
+blue=#7aa2f7
+red=#d47d85
+darkblue=#668ee3
+
+interval=0
+
+_date() {
+    printf " ^c$darkblue^ $(date '+%b %d (%a) ^d^ ^c#d47d85^ %H:%M')%s" " ^d^"
+}
+
+_batt() {
+    get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+    printf " ^c$green^ $get_capacity%s" "% ^d^"
+}
+
+_wlan() {
+    # iw dev wlp3s0 info | grep ssid | awk '{print $2}'
+    case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+	    up) printf " ^c$blue^ %s" "Up ^d^" ;;
+	    down) printf " ﲁ^c$red^ %s" "Down ^d^" ;;
+    esac
+}
+
+_vol() {
+    # needs alsa-utils
+    printf " 墳^c$white^ $(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')%s" "% ^d^"
+}
+
+_mem() {
+    printf " ^c$green^ $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)%s" " ^d^"
+}
+
+_cpu() {
+    printf " ^c$red^ $(top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\([0-9.]*\)%* id.*/\1/' | awk '{print 100 - $1}')%s" "% ^d^"
+}
+
+_brightness() {
+    brightness=$(cat /sys/class/backlight/*/brightness)
+    percentage=$((brightness / 60)) # if brightness == 6000
+    percentage="$percentage"
+    printf " ^c$white^ $percentage%s" "% ^d^"
+}
+
+_keyboard() {
+    layout=$(setxkbmap -query | grep layout | awk '{print $2}')
+    printf " ^c$darkblue^ $layout%s" " ^d^"
+}
+
+# _updates() {
+#     # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+#     updates=$(xbps-install -un | wc -l) # void
+#     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
+#     if [ -z "$updates" ]; then
+#         printf " ^c#3d6dff^ 0 updates%s" " ^d^"
+#     else
+#         printf " ^c#3d6dff^ $updates updates%s" " ^d^"
+#     fi
+# }
+
+while :; do
+    [ $interval == 0 ] || [ $(($interval % 3600)) == 0 ] && _updates=$(_updates)
+    interval=$((interval + 1))
+
+    sleep 1 && xsetroot -name "$(_keyboard)$(_brightness)$(_cpu)$(_mem)$(_vol)$(_wlan)$(_batt)$(_date)"
+done

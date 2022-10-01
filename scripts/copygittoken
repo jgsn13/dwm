@@ -1,0 +1,2 @@
+#!/bin/sh
+cat ~/.gittoken | xclip -selection clipboard & notify-send "Token copied to clipboard." &

@@ -67,10 +67,58 @@ static const char *dmenucmd[] = {"dmenu_run", "-fn", dmenufont, "-nb",
                                  col_cyan,    "-sf", col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
 
+// look at the scripts folder
+static const char *dmenuemoji[] = {"dmenuunicode", NULL};
+static const char *print_select[] = {"print_select", NULL};
+static const char *print_fullscreen[] = {"print_fullscreen", NULL};
+static const char *print_window[] = {"print_window", NULL};
+static const char *copygittoken[] = {"copygittoken", NULL};
+
+static const char *volup[] = {"amixer", "-q", "set", "Master", "5%+", NULL};
+static const char *voldown[] = {"amixer", "-q", "set", "Master", "5%-", NULL};
+static const char *volmute[] = {"amixer", "-q", "set", "Master", "0%", NULL};
+static const char *volunmute[] = {"amixer", "-q", "set", "Master", "60%", NULL};
+
+// commands
+static const char *rofi[] = {"rofi", "-show", "drun", "-show-icons", NULL};
+static const char *mapbr[] = {"setxkbmap", "br", NULL};
+static const char *mapus[] = {"setxkbmap", "us", NULL};
+static const char *ranger[] = {"st", "-e", "ranger", NULL};
+static const char *bottom[] = {"st", "-e", "btm", NULL};
+static const char *shutdown[] = {"sudo", "shutdown", "-h", "now", NULL};
+static const char *reboot[] = {"sudo", "reboot", NULL};
+static const char *slock[] = {"slock", NULL};
+static const char *xkill[] = {"xkill", NULL};
+static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
+static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
+
 static const Key keys[] = {
-    /* modifier                     key        function        argument */
-    {MODKEY, XK_p, spawn, {.v = dmenucmd}},
-    {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
+    /* modifier - key - function argument */
+    {MODKEY, XK_space, spawn, {.v = dmenucmd}},
+    {MODKEY, XK_Return, spawn, {.v = termcmd}},
+
+    // custom
+
+    {MODKEY, XK_d, spawn, {.v = rofi}},
+    {MODKEY, XK_p, spawn, {.v = print_select}},
+    {MODKEY | ControlMask, XK_p, spawn, {.v = print_fullscreen}},
+    {MODKEY | ControlMask | ShiftMask, XK_p, spawn, {.v = print_window}},
+    {MODKEY, XK_l, spawn, {.v = slock}},
+    {MODKEY | AltMask, XK_k, spawn, {.v = volup}},
+    {MODKEY | AltMask, XK_j, spawn, {.v = voldown}},
+    {MODKEY | AltMask, XK_m, spawn, {.v = volmute}},
+    {MODKEY | AltMask, XK_u, spawn, {.v = volunmute}},
+    {MODKEY | AltMask, XK_f, spawn, {.v = ranger}},
+    {MODKEY | ControlMask, XK_m, spawn, {.v = bottom}},
+    {MODKEY | ControlMask, XK_s, spawn, {.v = shutdown}},
+    {MODKEY | ControlMask, XK_r, spawn, {.v = reboot}},
+    {MODKEY | ControlMask, XK_g, spawn, {.v = copygittoken}},
+    {MODKEY, XK_e, spawn, {.v = dmenuemoji}},
+    {MODKEY | ControlMask, XK_x, spawn, {.v = xkill}},
+    {MODKEY | ControlMask, XK_b, spawn, {.v = mapbr}},
+    {MODKEY | ControlMask, XK_u, spawn, {.v = mapus}},
+    {MODKEY | ControlMask, XK_k, spawn, {.v = xi}},
+    {MODKEY | ControlMask, XK_j, spawn, {.v = xd}},
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
