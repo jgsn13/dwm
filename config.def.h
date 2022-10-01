@@ -3,12 +3,12 @@
 /* appearance */
 static const unsigned int borderpx = 1; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
-static const unsigned int gappih = 10;  /* horiz inner gap between windows */
-static const unsigned int gappiv = 10;  /* vert inner gap between windows */
+static const unsigned int gappih = 4;  /* horiz inner gap between windows */
+static const unsigned int gappiv = 4;  /* vert inner gap between windows */
 static const unsigned int gappoh =
-    10; /* horiz outer gap between windows and screen edge */
+    4; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov =
-    10; /* vert outer gap between windows and screen edge */
+    4; /* vert outer gap between windows and screen edge */
 static const int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning =
@@ -49,7 +49,7 @@ static const Rule rules[] = {
      */
     /* class      instance    title       tags mask     isfloating   monitor */
     {"Gimp", NULL, NULL, 0, 1, -1},
-    {"Firefox", NULL, NULL, 1 << 8, 0, -1},
+    // {"Firefox", NULL, NULL, 1 << 8, 0, -1},
 };
 
 /* layout(s) */
@@ -62,8 +62,8 @@ static const int lockfullscreen =
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    {"[]=", tile}, /* first entry is default */
     {"><>", NULL}, /* no layout function means floating behavior */
+    {"[]=", tile}, /* first entry is default */
     {"[M]", monocle},
 };
 
