@@ -1,15 +1,15 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx = 0; /* border pixel of windows */
+static const unsigned int borderpx = 2; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
-static const unsigned int cornerrad = 3;
-static const unsigned int gappih = 4; /* horiz inner gap between windows */
-static const unsigned int gappiv = 4; /* vert inner gap between windows */
+static const unsigned int cornerrad = 0;
+static const unsigned int gappih = 0; /* horiz inner gap between windows */
+static const unsigned int gappiv = 0; /* vert inner gap between windows */
 static const unsigned int gappoh =
-    4; /* horiz outer gap between windows and screen edge */
+    0; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov =
-    4; /* vert outer gap between windows and screen edge */
+    0; /* vert outer gap between windows and screen edge */
 static const int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning =
@@ -27,15 +27,15 @@ static const int topbar = 1;      /* 0 means bottom bar */
 static const int user_bh =
     4; /* 2 is the default spacing around the bar's font */
 static const int viewontag = 1; /* Switch view on tag switch */
-static const int vertpad = 5;   /* vertical padding of bar */
-static const int sidepad = 5;   /* horizontal padding of bar */
+static const int vertpad = 0;   /* vertical padding of bar */
+static const int sidepad = 0;   /* horizontal padding of bar */
 static const char *fonts[] = {"Hack NF:size=10"};
 static const char dmenufont[] = "Hack NF:size=10";
-static const char col_gray1[] = "#0d1012";
+static const char col_gray1[] = "#000000";
 static const char col_gray2[] = "#171716";
 static const char col_gray3[] = "#eeeeee";
-static const char col_gray4[] = "#5491ab";
-static const char col_cyan[] = "#53738D";
+static const char col_gray4[] = "#fabd2f";
+static const char col_cyan[] = "#d79921";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
@@ -91,6 +91,7 @@ static const char *dmenucmd[] = {
     "dmenu_run", "-fn",    dmenufont, "-nb",     col_gray1, "-nf", col_gray3,
     "-sb",       col_cyan, "-sf",     col_gray4, "-c",      NULL};
 static const char *termcmd[] = {"kitty", NULL};
+static const char *alttermcmd[] = {"st", NULL};
 
 // look at the scripts folder
 static const char *dmenuemoji[] = {"dmenuunicode", NULL};
@@ -121,6 +122,7 @@ static const Key keys[] = {
     /* modifier - key - function argument */
     {MODKEY, XK_space, spawn, {.v = dmenucmd}},
     {MODKEY, XK_Return, spawn, {.v = termcmd}},
+    {MODKEY|ControlMask, XK_Return, spawn, {.v = alttermcmd}},
 
     // custom
 
