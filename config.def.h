@@ -34,8 +34,8 @@ static const char dmenufont[] = "Hack NF:size=10";
 static const char col_gray1[] = "#000000";
 static const char col_gray2[] = "#171716";
 static const char col_gray3[] = "#eeeeee";
-static const char col_gray4[] = "#fabd2f";
-static const char col_cyan[] = "#d79921";
+static const char col_gray4[] = "#51cf7e";
+static const char col_cyan[] = "#3e9e61";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
@@ -90,8 +90,8 @@ static const Layout layouts[] = {
 static const char *dmenucmd[] = {
     "dmenu_run", "-fn",    dmenufont, "-nb",     col_gray1, "-nf", col_gray3,
     "-sb",       col_cyan, "-sf",     col_gray4, "-c",      NULL};
-static const char *termcmd[] = {"kitty", NULL};
-static const char *alttermcmd[] = {"st", NULL};
+static const char *termcmd[] = {"st", NULL};
+static const char *alttermcmd[] = {"kitty", NULL};
 
 // look at the scripts folder
 static const char *dmenuemoji[] = {"dmenuunicode", NULL};

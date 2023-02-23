@@ -55,7 +55,8 @@ _keyboard() {
 }
 
 _updates() {
-    updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
+    updates=$(dnf check-update -y | grep -Ec ' updates') # fedora
+    # updates=$(checkupdates | wc -l)   # arch , needs pacman contrib
     # updates=$(xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
