@@ -70,5 +70,5 @@ while :; do
     [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(_updates)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "$(_updates)$(_brightness)$(_mem)$(_vol)$(_wlan)$(_date)"
+    sleep 1 && xsetroot -name "$(_brightness)$(_mem)$(_vol)$(_wlan)$(_date)"
 done
