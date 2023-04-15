@@ -31,11 +31,11 @@ static const int vertpad = 0;   /* vertical padding of bar */
 static const int sidepad = 0;   /* horizontal padding of bar */
 static const char *fonts[] = {"Hack NF:size=10"};
 static const char dmenufont[] = "Hack NF:size=10";
-static const char col_gray1[] = "#000000";
-static const char col_gray2[] = "#171716";
-static const char col_gray3[] = "#eeeeee";
-static const char col_gray4[] = "#51cf7e";
-static const char col_cyan[] = "#3e9e61";
+static const char col_gray1[] = "#242C3E";
+static const char col_gray2[] = "#2F3448";
+static const char col_gray3[] = "#C1C8D6";
+static const char col_gray4[] = "#7896C8";
+static const char col_cyan[] = "#6080B1";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},

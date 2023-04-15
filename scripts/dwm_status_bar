@@ -1,19 +1,20 @@
 #! /bin/bash
 
 # colors
-bg=#14181c
-black=#1e222a
-green=#7eca9c
-white=#abb2bf
-grey=#282c34
-blue=#7aa2f7
-red=#d47d85
-darkblue=#668ee3
+bg=#1B1F2C
+black=#242C3E
+green=#89A2B9
+white=#C1C8D6
+grey=#2F3448
+blue=#7896C8
+strongblue=#3F51B5
+red=#DC8D94
+darkblue=#6080B1
 
 interval=0
 
 _date() {
-    printf " ^c$darkblue^ $(date '+%b %d (%a) ^d^ ^c#d47d85^ %H:%M')%s" " ^d^ "
+    printf " ^c$darkblue^ $(date '+%b %d (%a) ^d^ ^c'$red'^ %H:%M')%s" " ^d^"
 }
 
 _batt() {
@@ -60,9 +61,9 @@ _updates() {
     # updates=$(xbps-install -un | wc -l) # void
     # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
     if [ -z "$updates" ]; then
-        printf " ^c#3d6dff^ 0%s" " ^d^"
+        printf " ^c$strongblue^ 0%s" " ^d^"
     else
-        printf " ^c#3d6dff^ $updates%s" " ^d^"
+        printf " ^c$strongblue^ $updates%s" " ^d^"
     fi
 }
 
