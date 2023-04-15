@@ -99,6 +99,7 @@ static const char *print_select[] = {"print_select", NULL};
 static const char *print_fullscreen[] = {"print_fullscreen", NULL};
 static const char *print_window[] = {"print_window", NULL};
 static const char *copygittoken[] = {"copygittoken", NULL};
+static const char *gpickcolorpicker[] = {"gpickcolorpicker", NULL};
 
 static const char *volup[] = {"amixer", "-q", "set", "Master", "5%+", NULL};
 static const char *voldown[] = {"amixer", "-q", "set", "Master", "5%-", NULL};
@@ -140,6 +141,7 @@ static const Key keys[] = {
     {MODKEY | ControlMask, XK_s, spawn, {.v = shutdown}},
     {MODKEY | ControlMask, XK_r, spawn, {.v = reboot}},
     {MODKEY | ControlMask, XK_g, spawn, {.v = copygittoken}},
+    {MODKEY, XK_c, spawn, {.v = gpickcolorpicker}},
     {MODKEY, XK_e, spawn, {.v = dmenuemoji}},
     {MODKEY | ControlMask, XK_x, spawn, {.v = xkill}},
     {MODKEY | ControlMask, XK_b, spawn, {.v = mapbr}},

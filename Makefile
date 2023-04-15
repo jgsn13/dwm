@@ -40,7 +40,7 @@ install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	mkdir -pv /home/${SUDO_USER}/Pictures/Screenshots
 	mkdir -pv /home/${SUDO_USER}/.local/share/dwm_utils
-	cp -f dwm scripts/dwm_status_bar scripts/print_fullscreen scripts/print_select scripts/print_window scripts/dmenuunicode scripts/copygittoken ${DESTDIR}${PREFIX}/bin
+	cp -f dwm scripts/* ${DESTDIR}${PREFIX}/bin
 	cp -f utils/emoji /home/${SUDO_USER}/.local/share/dwm_utils 
 	cp -f dwm ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
@@ -56,6 +56,7 @@ uninstall:
 		${DESTDIR}${PREFIX}/bin/print_select\
 		${DESTDIR}${PREFIX}/bin/print_window\
 		${DESTDIR}${PREFIX}/bin/copygittoken\
+		${DESTDIR}${PREFIX}/bin/gpickcolorpicker\
 		${DESTDIR}${PREFIX}/bin/dmenuunicode\
 		/home/${SUDO_USER}/.local/share/dwm_utils/emoji\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1

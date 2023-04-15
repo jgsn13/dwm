@@ -1,0 +1,11 @@
+#! /bin/bash
+color=$(gpick --single --output)
+
+if [ $(echo -n "$color" | wc -c) -eq 0 ]; then
+  echo "Error: No color selected"
+  exit 1
+fi
+
+echo $color | xclip -selection clipboard
+message="<span foreground='$color'>$color</span> copied to clipboard"
+notify-send "🎨 Gpick" "$message"
